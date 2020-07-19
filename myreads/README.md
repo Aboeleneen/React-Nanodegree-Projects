@@ -1,68 +1,72 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# MyReads Project
+  virtual bookcase to store your books and track what you're reading.
+  
+### Features :
+  - The main page shows 3 shelves for books [current reading , want to read , read ] 
+  - Each book is shown on the correct shelf, along with its title and all of its authors. 
+  - Move books from one shelf to another.
+  - Search for books by the title or the authors and add them to one of the shelves.
 
-## Available Scripts
+## Code Stucture :
+```bash
+├── README.md - This file.
+├── SEARCH_TERMS.md # The whitelisted short collection of available search terms for you to use with your app.
+├── package.json # npm package manager file. It's unlikely that you'll need to modify this.
+├── public
+│   ├── favicon.ico # React Icon, You may change if you wish.
+│   └── index.html # DO NOT MODIFY
+└── src
+    ├── App.css # Styles for your app. Feel free to customize this as you desire.
+    ├── App.js # This is the root of your app. Contains static HTML right now.
+    ├── App.test.js # Used for testing. Provided with Create React App. Testing is encouraged, but not required.
+    ├── Book.jsx # book Component and its own state
+    ├── BooksAPI.js # A JavaScript API for the provided Udacity backend. Instructions for the methods are below.
+    ├── BookShelf.jsx # Component to render books related to specific shelf
+    ├── index.css # Global styles. You probably won't need to change anything here.
+    ├── icons # Helpful images for your app. Use at your discretion.
+    │   ├── add.svg
+    │   ├── arrow-back.svg
+    │   └── arrow-drop-down.svg
+    ├── index.css # Global styles. You probably won't need to change anything here.
+    ├── SearchBooks.jsx # Component for search for books and render the results 
+    └── index.js # You should not need to modify this file. It is used for DOM rendering only.
+```
 
-In the project directory, you can run:
+## Instructions to install and use :
+You can run a hosted version of the app at [myreads-sarahmaris.surge.sh/](https://myreads-sarahmaris.surge.sh/)
 
-### `yarn start`
+The project uses Node.js and the Create-React-App starter. If you do not have Node >= 6.x installed, you can download it here: [Node.js](https://nodejs.org/en/)
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Once Node is installed, navigate to the directory where you want to store the app
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+```
+git clone https://github.com/Aboeleneen/React-Nanodegree-Projects.git
 
-### `yarn test`
+``` 
+navigate to myreads project then 
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+npm install
+```
 
-### `yarn build`
+Once all of the dependencies have been installed you can launch the app with
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+npm start
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+A new browser window should automatically open displaying the app. If it doesn't, navigate to [http://localhost:3000/](http://localhost:3000/) in your browser
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## User Guide :
+  - Books are sorted into three categories: Currently Reading, Want to Read and Read
+  - To change a book's category or remove a book from the list, click on the green button on the book cover
+    ![Change menu](src/screenshots/change-shelf.png "change")
 
-### `yarn eject`
+  - To add new books, click on the green + button at the bottom of the page.
+    Enter an author's name or subject. Up to 20 items will be returned.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  _Note: The backend API is limited to a fixed set of [search terms](#search-terms) -- see below for valid search options_
+  ![Search Screen](src/screenshots/search-books.png "search")
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+  
