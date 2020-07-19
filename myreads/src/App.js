@@ -2,7 +2,6 @@ import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import SearchBooks from './SearchBooks' ;
-import Book from './Book' ;
 import BookShelf from './BookShelf';
 import {Link , Route} from 'react-router-dom';
 
@@ -26,6 +25,9 @@ class BooksApp extends React.Component {
   }
 
   updateBook = (selectedBook , newShelf)=>{
+    const found = this.state.Books.find((book)=>(book.id === selectedBook.id)) !== undefined ;
+    console.log(found);
+    if(!found) this.addBook(selectedBook);
     BooksAPI.update(selectedBook,newShelf).then(()=>{
         this.setState((prevState)=>({Books: prevState.Books.map((book)=>{
             if(book.id === selectedBook.id){
@@ -36,13 +38,17 @@ class BooksApp extends React.Component {
     })
   }
 
+  addBook = (book)=>{
+    this.setState((prevState)=>({Books : [...prevState.Books , book]}))
+  }
+
   render() {
     const currentBooks = this.state.Books.filter((book)=>(book.shelf === "currentlyReading"));
     const wantBooks = this.state.Books.filter((book)=>(book.shelf === 'wantToRead'));
     const readBooks = this.state.Books.filter((book)=>(book.shelf === 'read'))
     return (
       <div className="app">
-          <Route exact path='/create' component={SearchBooks}/>
+          <Route exact path='/create' render={()=>(<SearchBooks addBook = {this.addBook} allBooks={this.state.Books} updateBook = {this.updateBook}/>)}/>
           <Route exact path='/' render={()=>
            (<div className="list-books">
              <div className="list-books-title">

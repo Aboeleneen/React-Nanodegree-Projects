@@ -11,13 +11,14 @@ class SearchBooks extends Component {
     }
 
     handleChange = (query)=>{
-      this.setState({query:query.trim});
-      if(this.state.query.length !== 0){
-        BooksAPI.search(this.state.query).then((books)=>{
-            if(!books.error){
+      this.setState({query:query});
+      if(this.state.query.length !== 0 ){
+        BooksAPI.search(query.trim()).then((books)=>{
+          console.log(books);
+            if(books !== undefined && !books.error){
               this.setState({resultBooks:books});
             }else{
-              this.setState({resultBooks:books.items});
+              this.setState({resultBooks: []});
             }
         })
       }else{
@@ -45,7 +46,7 @@ class SearchBooks extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {this.state.resultBooks.map((book)=>(<Book book = {book} />))}
+            {this.state.resultBooks.map((book)=>(<Book onShelf={this.props.allBooks.find((selected)=>(selected.id===book.id)) !== undefined}key = {book.id} book = {book} updateBook={this.props.updateBook}/>))}
           </ol>
         </div>
       </div>)

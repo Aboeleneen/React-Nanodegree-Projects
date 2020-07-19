@@ -11,9 +11,18 @@ class Book extends Component {
           <div className="book-shelf-changer">
             <select>
               <option value="move" disabled>Move to...</option>
-              <option onClick={(event)=>{this.props.updateBook(this.props.book , event.target.value)}} value="currentlyReading">Currently Reading</option>
-              <option onClick={(event)=>{this.props.updateBook(this.props.book , event.target.value)}} value="wantToRead">Want to Read</option>
-              <option onClick={(event)=>{this.props.updateBook(this.props.book , event.target.value)}} value="read">Read</option>
+              <option onClick={(event)=>{this.props.updateBook(this.props.book , event.target.value)}}
+                      value="currentlyReading">
+                      {this.props.book.shelf==="currentlyReading" && this.props.onShelf ? "✓ Currently Reading" :  "Currently Reading"}
+              </option>
+              <option onClick={(event)=>{this.props.updateBook(this.props.book , event.target.value)}}
+                      value="wantToRead">
+                      {this.props.book.shelf==="wantToRead"  && this.props.onShelf ? "✓ Want to Read" : "Want to Read"}
+              </option>
+              <option onClick={(event)=>{this.props.updateBook(this.props.book , event.target.value)}}
+                      value="read">
+                      {this.props.book.shelf==="read"  && this.props.onShelf ? "✓ Read" : "Read"}
+              </option>
               <option value="none">None</option>
             </select>
           </div>
