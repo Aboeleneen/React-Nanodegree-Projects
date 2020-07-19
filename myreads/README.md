@@ -1,6 +1,6 @@
 # MyReads Project
   virtual bookcase to store your books and track what you're reading.
-  
+   ![Main](src/screenshots/main.PNG)
 ### Features :
   - The main page shows 3 shelves for books [current reading , want to read , read ] 
   - Each book is shown on the correct shelf, along with its title and all of its authors. 
@@ -27,21 +27,19 @@
     │   ├── add.svg
     │   ├── arrow-back.svg
     │   └── arrow-drop-down.svg
+    ├── screenshots # images for the website
     ├── index.css # Global styles. You probably won't need to change anything here.
     ├── SearchBooks.jsx # Component for search for books and render the results 
     └── index.js # You should not need to modify this file. It is used for DOM rendering only.
 ```
 
 ## Instructions to install and use :
-You can run a hosted version of the app at [myreads-sarahmaris.surge.sh/](https://myreads-sarahmaris.surge.sh/)
-
 The project uses Node.js and the Create-React-App starter. If you do not have Node >= 6.x installed, you can download it here: [Node.js](https://nodejs.org/en/)
 
 Once Node is installed, navigate to the directory where you want to store the app
 
 ```
 git clone https://github.com/Aboeleneen/React-Nanodegree-Projects.git
-
 ``` 
 navigate to myreads project then 
 
@@ -60,13 +58,13 @@ A new browser window should automatically open displaying the app. If it doesn't
 ## User Guide :
   - Books are sorted into three categories: Currently Reading, Want to Read and Read
   - To change a book's category or remove a book from the list, click on the green button on the book cover
-    ![Change menu](src/screenshots/change-shelf.png "change")
+    ![Change menu](src/screenshots/change-shelf.PNG)
 
   - To add new books, click on the green + button at the bottom of the page.
     Enter an author's name or subject. Up to 20 items will be returned.
 
   _Note: The backend API is limited to a fixed set of [search terms](#search-terms) -- see below for valid search options_
-  ![Search Screen](src/screenshots/search-books.png "search")
+  ![Search Screen](src/screenshots/search.PNG)
 
 
   
