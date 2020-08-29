@@ -1,0 +1,194 @@
+<head>
+  <title>Udacity Todos Goals</title>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/redux/3.7.2/redux.min.js'></script>
+  <script src='https://unpkg.com/react@16.3.0-alpha.1/umd/react.development.js'></script>
+  <script src='https://unpkg.com/react-dom@16.3.0-alpha.1/umd/react-dom.development.js'></script>
+  <script src='https://unpkg.com/babel-standalone@6.15.0/babel.min.js'></script>
+  <script src="https://tylermcginnis.com/goals-todos-api/index.js"></script>
+  <script src="https://unpkg.com/redux-thunk@2.2.0/dist/redux-thunk.min.js"></script>
+</head>
+<body>
+
+  <div id='app'></div>
+
+  <script type='text/javascript'>
+    function generateId () {
+      return Math.random().toString(36).substring(2) + (new Date()).getTime().toString(36);
+    }
+    // App Code
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    const store = Redux.createStore(Redux.combineReducers({
+      todos,
+      goals,
+      loading,
+    }), Redux.applyMiddleware(ReduxThunk.default  , checker, logger))
+  </script>
+
+  <script type='text/babel'>
+
+    function connect(mapStateToProps){
+      return (Component) =>{
+        class Recevier extends React.Component{
+          componentDidMount(){
+            const {subscribe} = this.props.store
+
+            this.unsubscribe = subscribe(()=>{
+              this.forceUpdate();
+            })
+          }
+          componentWillUnmount(){
+            this.unsubscribe()
+          }
+          render(){
+            const {dispatch , getState} = this.props.store
+            const state = getState()
+            const stateNeeded = mapStateToProps(state)
+
+            return <Component {...stateNeeded} dispatch={dispatch} />
+          }
+        }
+        class connectedComponent extends React.Component{
+          render(){
+            return(
+              <Context.Consumer>
+                {(store)=> <Recevier store={store}/>}
+              </Context.Consumer>
+            )
+          }
+        }
+      }
+    }
+
+
+
+
+    class Goals extends React.Component {
+      addItem = (e)=>{
+        e.preventDefault();
+        this.props.dispatch(handleAddGoal(this.input.value) , ()=>   this.input.value = '')
+        }
+
+
+      removeItem = (item)=>{
+        this.props.dispatch(removeGoalAction(item.id));
+        return API.deleteGoal(item.id)
+        .catch(()=>{
+            this.props.dispatch(addGoalAction(item));
+        })
+      }
+
+      toggleItem = (item)=>{
+        this.props.dispatch(toggleGoalAction(item.id));
+        return API.saveTodoToggle(item.id)
+        .catch(()=>{
+          this.props.dispatch(toggleGoalAction(item.id));
+          alert('an error occured :( try again')
+        })
+      }
+      render() {
+        return (
+          <div>
+            <h1> Goal List </h1>
+            <input
+              type='text'
+              placeholder = 'Add Goal'
+              ref = {(input)=>this.input = input}
+            />
+            <button
+              onClick = {this.addItem}
+            >Add Goal </button>
+            <List
+              items={this.props.goals}
+              remove={this.removeItem}
+              toggle ={this.toggleItem}
+            />
+          </div>
+        )
+      }
+    }
+
+    class ConnectedGoal extends React.Component{
+      render(){
+        return {
+          <Context.Consumer>
+            {(store)=>{
+              const {goals} = store.getState()
+              return <Goals goals ={goals} dispatch={store.dispatch}/>
+            }}
+          </Context.Consumer>
+        }
+      }
+    }
+
+    class App extends React.Component {
+      componentDidMount(){
+
+        const {store} = this.props ;
+        store.subscribe(() => this.forceUpdate() )
+        Promise.all([
+          API.fetchTodos(),
+          API.fetchGoals()
+        ]).then(([ todos, goals ]) => {
+          store.dispatch(receiveDataAction(todos,goals));
+        })
+      }
+      render() {
+        const {store} = this.props ;
+        const {todos  , loading} = store.getState();
+
+        if(loading === true){
+          return <h1> Loading </h1>
+        }
+
+        return (
+          <div>
+            <Todos todos={todos} store={this.props.store}/>
+            <ConnectedGoal/>
+          </div>
+        )
+      }
+    }
+
+    const Context = React.createContext();
+
+    class connectApp extends React.Component{
+      render(){
+        <Context.consumer>
+          {(store)=>(
+            <App store={store}/>
+          )}
+        </Context.consumer>
+      }
+    }
+    class Provider extends React.Component{
+      render(){
+        <Context.Provider value={this.props.store}>
+          {this.props.children}
+        </Context.Provider>
+      }
+    }
+
+    ReactDOM.render(
+      <Provider store={store}>
+        <App/>,
+      </Provider>,
+      document.getElementById('app')
+    )
+  </script>
+</body>
+</html>

@@ -14,7 +14,6 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
      Books : [] ,
-    showSearchPage: false
   }
 
   componentDidMount(){
@@ -48,7 +47,7 @@ class BooksApp extends React.Component {
     const readBooks = this.state.Books.filter((book)=>(book.shelf === 'read'))
     return (
       <div className="app">
-          <Route exact path='/create' render={()=>(<SearchBooks addBook = {this.addBook} allBooks={this.state.Books} updateBook = {this.updateBook}/>)}/>
+          <Route exact path='/search' render={()=>(<SearchBooks addBook = {this.addBook} allBooks={this.state.Books} updateBook = {this.updateBook}/>)}/>
           <Route exact path='/' render={()=>
            (<div className="list-books">
              <div className="list-books-title">
@@ -62,7 +61,7 @@ class BooksApp extends React.Component {
                </div>
              </div>
              <div className="open-search">
-               <Link to='/create' className="add-button" >Add a book</Link>
+               <Link to='/search' className="add-button" >Add a book</Link>
              </div>
            </div>
          )} />

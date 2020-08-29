@@ -11,24 +11,19 @@ class Book extends Component {
          <div className="book-top">
           <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: 'url(' +cover + ')' }}></div>
           <div className="book-shelf-changer">
-            <select>
-              <option value="move" disabled>Move to...</option>
-              <option onClick={(event)=>{this.props.updateBook(this.props.book , event.target.value)}}
-                      value="currentlyReading">
-                      {this.props.book.shelf==="currentlyReading" && this.props.onShelf ? "✓ Currently Reading" :  "  Currently Reading"}
-              </option>
-              <option onClick={(event)=>{this.props.updateBook(this.props.book , event.target.value)}}
-                      value="wantToRead">
-                      {this.props.book.shelf==="wantToRead"  && this.props.onShelf ? "✓ Want to Read" : "  Want to Read"}
-              </option>
-              <option onClick={(event)=>{this.props.updateBook(this.props.book , event.target.value)}}
-                      value="read">
-                      {this.props.book.shelf==="read"  && this.props.onShelf ? "✓ Read" : "  Read"}
-              </option>
-              <option value="none">
-                      {this.props.onShelf ? "  None" : "✓ None"}
-              </option>
-            </select>
+
+<select defaultValue={this.props.book.shelf} onChange ={(event)=>{this.props.updateBook(this.props.book , event.target.value)}}>
+                <option value="move" disabled>
+                  Move to...
+                </option>
+                <option value="currentlyReading" defaultValue>
+                  Currently Reading
+                </option>
+                <option value="wantToRead">Want to Read</option>
+                <option value="read">Read</option>
+                <option value="none">None</option>
+              </select>
+
           </div>
         </div>
         <div className="book-title">{this.props.book.title}</div>

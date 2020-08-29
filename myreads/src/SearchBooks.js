@@ -16,7 +16,17 @@ class SearchBooks extends Component {
         BooksAPI.search(query.trim()).then((books)=>{
           console.log(books);
             if(books !== undefined && !books.error){
-              this.setState({resultBooks:books});
+              this.setState({resultBooks:books.map((book) => {
+                                book.shelf = "none" ;
+                                for (const shelfBook of this.props.allBooks) {
+                                    if (shelfBook.id === book.id
+                                        && shelfBook.title === book.title
+                                        && shelfBook.authours === book.authours)
+                                        book.shelf = shelfBook.shelf
+                                }
+                                return book;
+                            })
+                          });
             }else{
               this.setState({resultBooks: []});
             }
