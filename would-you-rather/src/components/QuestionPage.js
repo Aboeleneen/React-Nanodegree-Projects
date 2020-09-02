@@ -1,17 +1,14 @@
 import React , {Component} from 'react'
 import {connect} from 'react-redux'
 import {handleSubmitAnswer} from '../actions/shared'
+import { Button, Card, Image , Grid} from 'semantic-ui-react'
+import QuestionResult from './QuestionResult'
 
 class QuestionPage extends Component{
   state = {
     selectedOption : "optionOne"
   }
 
-  handleChange = (e)=>{
-    this.setState({
-      selectedOption : e.target.value
-    })
-  }
   handleSubmit= (e)=>{
     e.preventDefault()
     console.log(e.target)
@@ -23,33 +20,74 @@ class QuestionPage extends Component{
     }
     dispatch(handleSubmitAnswer(info))
   }
+  handleChange = (e)=>{
+    console.log(e.target.id)
+    this.setState({
+      selectedOption : e.target.id
+    })
+    const buttonOne = this.buttonOne.ref.current.classList
+    const buttonTwo = this.buttonTwo.ref.current.classList
+    if(e.target.id === 'optionOne'){
+      buttonOne.remove('basic')
+      buttonTwo.add('basic')
+    }else{
+      buttonTwo.remove('basic')
+      buttonOne.add('basic')
+    }
+  }
   render(){
-      const {question , answered} = this.props
+      const {question , answered , author} = this.props
+      const dateObject = new Date(question.timestamp*1000)
+      const humanDate = dateObject.toLocaleString()
       return (
         <div>
           { answered
-            ? <h1> answered </h1> :
-              <form onSubmit={this.handleSubmit}>
-                <input
-                    type="radio"
-                    id="optionOne"
-                    name="option"
-                    value="optionOne"
-                    checked={this.state.selectedOption === "optionOne"}
-                    onChange = {this.handleChange}
-                />
-                <label for="optionOne">{question.optionOne.text}</label>
-                <input
-                    type="radio"
-                    id="optionTwo"
-                    name="option"
-                    value="optionTwo"
-                    checked={this.state.selectedOption === "optionTwo"}
-                    onChange = {this.handleChange}
-                />
-                <label for="optionTwo"> {question.optionTwo.text}</label>
-                <button>Submit</button>
-              </form>
+            ? <QuestionResult id={this.props.id}/> :
+            <Grid columns={2} centered>
+              <Grid.Column>
+                <Card fluid>
+                <Card.Content>
+                  <Image
+                    circular
+                    floated='left'
+                    size='tiny'
+                    src={author.avatarURL}
+                  />
+                  <Card.Header>{author.name}</Card.Header>
+                  <Card.Meta> At <strong> {humanDate} </strong> </Card.Meta>
+                  <Card.Description>
+                      <h3>Would you rather ?! </h3>
+                      <Button
+                        ref={(buttonOne)=> this.buttonOne = buttonOne}
+                        id='optionOne'
+                        fluid
+                        basic
+                        color='green'
+                        onClick={this.handleChange}
+                       >{question.optionOne.text}
+                     </Button>
+                      <br/>
+                      <Button
+                        ref={(buttonTwo)=> this.buttonTwo = buttonTwo}
+                        id='optionTwo'
+                        fluid
+                        basic
+                        color='red'
+                        onClick={this.handleChange}
+                       >{question.optionTwo.text}
+                     </Button>
+                  </Card.Description>
+                </Card.Content>
+                <Card.Content extra>
+                  <div className='ui'>
+                    <Button onClick={this.handleSubmit} fluid basic color='blue'>
+                      Submit
+                    </Button>
+                  </div>
+                </Card.Content>
+              </Card>
+            </Grid.Column>
+          </Grid>
           }
         </div>
       )
@@ -58,13 +96,15 @@ class QuestionPage extends Component{
 
 function mapStateToProps({users,questions,currentUser} , {id}){
     const question = questions[id]
-     console.log(question)
+    console.log(id)
     const optionOne = question.optionOne.votes.includes(currentUser)
     const optionTwo = question.optionTwo.votes.includes(currentUser)
+    const author = users[question.author]
     return {
       question,
       answered : optionOne || optionTwo,
-      currentUser
+      currentUser,
+      author,
     }
 }
 

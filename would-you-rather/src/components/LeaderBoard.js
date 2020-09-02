@@ -1,6 +1,7 @@
 import React , {Component} from 'react'
 import {connect} from 'react-redux'
-
+import UserCard from './UserCard'
+import {Card} from 'semantic-ui-react'
 class LeaderBoard extends Component{
   render(){
     const {users} = this.props
@@ -10,11 +11,11 @@ class LeaderBoard extends Component{
       return second-first
     })
     return (
-      <ul>
-        {keys.map((userID)=>(
-          <li key={userID}> {users[userID].name} </li>
-        ))}
-      </ul>
+        <Card.Group itemsPerRow={5}>
+              {keys.map((userID , i )=>(
+                <UserCard key={userID} id={userID} order={i}/>
+              ))}
+        </Card.Group>
     )
   }
 }

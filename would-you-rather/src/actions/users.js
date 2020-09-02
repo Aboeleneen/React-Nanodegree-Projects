@@ -2,6 +2,8 @@ import {_getUsers} from '../utils/_DATA.js'
 export const RECEIVE_USERS = 'RECEIVE_USERS'
 export const SUBMIT_USER_ANSWER = "SUBMIT_USER_ANSWER"
 export const SAVE_QUESTION_USER = "SAVE_QUESTION_USER"
+
+
 function receiveUsers(users){
   return{
     type:RECEIVE_USERS,
