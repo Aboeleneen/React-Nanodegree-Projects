@@ -7,6 +7,7 @@ export default function Users(state={} , action){
         ...state,
         ...action.users
       }
+      break;
     case SUBMIT_USER_ANSWER:
       return{
         ...state ,

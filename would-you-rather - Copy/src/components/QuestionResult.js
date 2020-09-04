@@ -1,11 +1,11 @@
 import React , {Component} from 'react'
-import {Progress , Card, Image , Grid , Label} from 'semantic-ui-react'
+import {Progress , Button, Card, Image , Grid} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 
 class QuestionResult extends Component{
   render(){
     const {question , author , userOption , optionOne , optionTwo } = this.props
-    const dateObject = new Date(question.timestamp)
+    const dateObject = new Date(question.timestamp*1000)
     const humanDate = dateObject.toLocaleString()
     return(
       <Grid columns={2} centered>
@@ -24,17 +24,11 @@ class QuestionResult extends Component{
               <Card.Header>{author.name}</Card.Header>
               <Card.Meta> At <strong> {humanDate} </strong> </Card.Meta>
               <Card.Description>
-                {userOption==='optionOne' && <Label basic color='red' pointing='below'>
-                  Your Answer
-                </Label>}
                 <Progress active={userOption==='optionOne'} size='large' value={optionOne} total={optionOne+optionTwo} progress='ratio' color={userOption==='optionOne'? 'red' : null} >
-                  <Label> {(optionOne/(optionOne+optionTwo))*100} % </Label> {question.optionOne.text}
+                  {question.optionOne.text}
                 </Progress>
-                {userOption==='optionTwo' && <Label basic color='red' pointing='below'>
-                  Your Answer
-                </Label>}
                 <Progress active={userOption==='optionTwo'} size='large' value={optionTwo} total={optionOne+optionTwo} progress='ratio' color={userOption==='optionTwo'? 'red' : null}>
-                  <Label> {(optionTwo/(optionOne+optionTwo))*100} % </Label> {question.optionTwo.text}
+                  {question.optionTwo.text}
                 </Progress>
 
               </Card.Description>

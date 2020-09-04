@@ -1,6 +1,6 @@
 import React , {Component} from 'react'
 import {connect} from 'react-redux'
-import {withRouter } from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 import { Button, Card, Image } from 'semantic-ui-react'
 
 class Question extends Component{
@@ -10,8 +10,8 @@ class Question extends Component{
 
   }
   render(){
-    const {question , author} = this.props
-    const dateObject = new Date(question.timestamp)
+    const {question , currentUser , author} = this.props
+    const dateObject = new Date(question.timestamp*1000)
     const humanDate = dateObject.toLocaleString()
     return (
       <Card fluid>
@@ -47,7 +47,6 @@ function mapStateToProps({questions , currentUser , users}, {id}){
 
 //<img src={author.avatarURL}></img>
   const question = questions[id]
-
   const author = users[question.author]
   return {
     question,

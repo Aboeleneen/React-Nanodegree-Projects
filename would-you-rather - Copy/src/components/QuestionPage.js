@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import {handleSubmitAnswer} from '../actions/shared'
 import { Button, Card, Image , Grid} from 'semantic-ui-react'
 import QuestionResult from './QuestionResult'
-import {Redirect} from 'react-router-dom'
 
 class QuestionPage extends Component{
   state = {
@@ -37,12 +36,8 @@ class QuestionPage extends Component{
     }
   }
   render(){
-      const {notFound} = this.props
-      if(notFound){
-        return <Redirect to='/notFound' />
-      }
       const {question , answered , author} = this.props
-      const dateObject = new Date(question.timestamp)
+      const dateObject = new Date(question.timestamp*1000)
       const humanDate = dateObject.toLocaleString()
       return (
         <div>
@@ -101,11 +96,7 @@ class QuestionPage extends Component{
 
 function mapStateToProps({users,questions,currentUser} , {id}){
     const question = questions[id]
-    if(!question){
-      return {
-        notFound : true
-      }
-    }
+    console.log(id)
     const optionOne = question.optionOne.votes.includes(currentUser)
     const optionTwo = question.optionTwo.votes.includes(currentUser)
     const author = users[question.author]

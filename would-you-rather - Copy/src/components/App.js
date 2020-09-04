@@ -10,9 +10,8 @@ import QuestionPage from './QuestionPage'
 import NewQuestion from './NewQuestion'
 import LeaderBoard from './LeaderBoard'
 import Navbar from './Navbar'
-import NotFound from './NotFound'
 import {Switch , Route , Redirect , } from 'react-router-dom'
-import {Tab , Grid} from 'semantic-ui-react'
+import {Label, Menu, Tab , Grid} from 'semantic-ui-react'
 class App extends Component{
   componentDidMount(){
     const {dispatch} = this.props
@@ -24,7 +23,7 @@ class App extends Component{
       {
         menuItem : {key:'UnAnswered Questions' , content: 'UnAnswered Questions'},
         render : ()=> (
-          <Tab.Pane >
+          <Tab.Pane>
             <ul>
               {this.props.unanswered.map((qid)=>(
                 <Question id={qid} />
@@ -53,23 +52,20 @@ class App extends Component{
           ? null
           : <Fragment>
               {this.props.isUserAuthenticated ? <Redirect to='/' /> : <Redirect to='/login'/>}
-              <Navbar />
-              <Switch>
-                <Route  path='/' exact render={()=>(
-                    <Grid centered columns={3}>
-                      <Grid.Column>
-                        <Tab menu={{ pointing: true }} panes={panes} />
-                      </Grid.Column>
-                    </Grid>
-                )} />
-                <Route  path='/login' exact component={Login} />
-                <Route  path='/leaderBoard' exact component={LeaderBoard} />
-                <Route  path='/add' exact component={NewQuestion} />
-                <Route  path='/question/:id' render={(props)=>(
-                  <QuestionPage id={props.match.params.id}/>
-                )}/>
-                <Route component={NotFound} />
-              </Switch>
+              {this.props.isUserAuthenticated ? <Navbar /> : null}
+              <Route  path='/' exact render={()=>(
+                  <Grid centered columns={3}>
+                    <Grid.Column>
+                      <Tab menu={{ pointing: true }} panes={panes} />
+                    </Grid.Column>
+                  </Grid>
+              )} />
+              <Route  path='/login' exact component={Login} />
+              <Route  path='/leaderBoard' exact component={LeaderBoard} />
+              <Route  path='/add' exact component={NewQuestion} />
+              <Route  path='/question/:id' render={(props)=>(
+                <QuestionPage id={props.match.params.id}/>
+              )}/>
             </Fragment>
         }
      </div>
@@ -78,8 +74,7 @@ class App extends Component{
 }
 
 function mapStateToProps({users , questions , currentUser}){
-  const allQuestions = _.isEmpty(questions) ? []
-                  : Object.keys(questions).sort((a,b)=> questions[b].timestamp - questions[a].timestamp)
+  const allQuestions = _.isEmpty(questions) ? [] : Object.keys(questions)
   const answered = currentUser === null ? [] : Object.keys(users[currentUser].answers)
   const unanswered = _.isEmpty(questions) ? [] : allQuestions.filter((qid)=> !answered.includes(qid))
 

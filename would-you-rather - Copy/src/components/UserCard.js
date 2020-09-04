@@ -1,5 +1,5 @@
 import React , {Component} from 'react'
-import {Card ,  Image , Icon} from 'semantic-ui-react'
+import {Card , Grid , Image , Icon} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 
 class UserCard extends Component{

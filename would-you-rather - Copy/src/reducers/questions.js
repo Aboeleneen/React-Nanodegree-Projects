@@ -8,6 +8,7 @@ export default function Questions(state={} , action){
         ...state ,
         ...action.questions
       }
+      break
     case SUBMIT_QUESTION_ANSWER:
       return{
         ...state ,
@@ -19,11 +20,13 @@ export default function Questions(state={} , action){
           }
         }
       }
+      break
     case SAVE_QUESTION :
       return {
         ...state ,
         [action.question.id]: action.question,
       }
+      break
     default:
       return state
   }

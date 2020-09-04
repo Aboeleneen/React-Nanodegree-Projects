@@ -20,6 +20,7 @@ class NewQuestion extends Component{
 
   handleSubmit = (e)=>{
     e.preventDefault()
+    console.log(e)
     const {dispatch} = this.props
     const optionOneText = this.state.first
     const optionTwoText = this.state.second
@@ -37,10 +38,7 @@ class NewQuestion extends Component{
   }
   render(){
     if(! this.props.isUserAuthenticated){
-      return (<Redirect to={{
-          pathname: '/login' ,
-          state : {from: this.props.location}
-      }} />)
+      return <Redirect to='/login' />
     }
     return(
       <Grid columns={2} centered>

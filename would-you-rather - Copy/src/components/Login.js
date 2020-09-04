@@ -1,20 +1,20 @@
 import React , {Component} from 'react'
 import {connect} from 'react-redux'
 import {setCurrentUser} from '../actions/currentUser'
-import {withRouter , Redirect} from 'react-router-dom'
-import { Button, Form, Grid, Header, Image, Segment , Dropdown} from 'semantic-ui-react'
+import {withRouter} from 'react-router-dom'
+import { Button, Form, Grid, Header, Image, Message, Segment , Dropdown} from 'semantic-ui-react'
 
 class Login extends Component{
   state = {
-    currentUser: null ,
-    isAuthed : false
+    currentUser: null
   }
   handleSubmit = (e)=>{
     e.preventDefault()
     const {dispatch} = this.props
     const userID = this.state.currentUser
-    if(userID!==null)
-      dispatch(setCurrentUser(userID))
+    dispatch(setCurrentUser(userID))
+    console.log("done")
+    this.props.history.push('/')
   }
   handleChange = (e , {value})=>{
     this.setState({
@@ -22,12 +22,7 @@ class Login extends Component{
     })
   }
   render(){
-    const {users , currentUser} = this.props
-    console.log(this.props.location)
-    const {from} = this.props.location.state || {from : {pathname:'/'}}
-    if(currentUser){
-      return <Redirect to={from} />
-    }
+    const {users} = this.props
     return (
        <Grid textAlign='center' style={{ height: '100vh' , backgroundColor: '#e6ebe7'}} verticalAlign='middle'>
         <Grid.Column style={{ maxWidth: 450 }}>
@@ -58,7 +53,7 @@ class Login extends Component{
   }
 }
 
-function mapStateToProps({users , currentUser}){
+function mapStateToProps({users}){
     const options = []
     Object.keys(users).forEach((userID) => {
 
@@ -71,8 +66,7 @@ function mapStateToProps({users , currentUser}){
     });
       console.log(options.length)
     return {
-      users : options,
-      currentUser,
+      users : options
     }
 }
 

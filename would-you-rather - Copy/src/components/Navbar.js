@@ -1,6 +1,6 @@
 import React , {Component} from 'react'
 import {NavLink , withRouter} from 'react-router-dom'
-import { Menu ,Image} from 'semantic-ui-react'
+import { Input, Menu , Icon  , Image} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {logout} from '../actions/currentUser'
 
@@ -20,12 +20,12 @@ class Navbar extends Component{
     const {activeItem , user} = this.props
     return(
       <Menu size='large' style={{backgroundColor: '#74e8e2'}}color='blue' primary>
-        {user && <Image
+        <Image
           circular
           floated='left'
           size='mini'
           src={user.avatarURL}
-        />}
+        />
         <Menu.Item
           as={NavLink} to='/'
           name='Home'
@@ -44,13 +44,13 @@ class Navbar extends Component{
           active={activeItem === 'LeaderBoard'}
           onClick={this.handleItemClick}
         />
-        {user && <Menu.Menu position='right'>
+        <Menu.Menu position='right'>
           <Menu.Item
             name='logout'
             active={activeItem === 'logout'}
             onClick={this.logout}
           />
-        </Menu.Menu>}
+        </Menu.Menu>
       </Menu>
     )
   }
