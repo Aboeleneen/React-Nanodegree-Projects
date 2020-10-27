@@ -1,5 +1,5 @@
 # Would You Rather Project
-  Web Application which helps users to create surveys.
+  Web Application which helps users to create surveys developed by React and Semantic-UI
   
 ### Features :
   - post questions
@@ -32,9 +32,15 @@ A new browser window should automatically open displaying the app. If it doesn't
 
 ### User Guide 
   - Log in with existing user 
+    ![](src/screenshots/login.PNG)
   - Home Page show unanswered questions by default and you can navigate to answered questions
+    ![](src/screenshots/Home.PNG)
   - to answer a question : click on *view more* in unanswered questions tab to view the selected question and vote for one choices then click submit
+    ![](src/screenshots/answer.PNG)
   - to view voting result : navigate to answered questions tab then click on *view more* for the selected questions
+    ![](src/screenshots/result.PNG)
   - to post a new question : click on *New Question* in the navbar , add your two chocies then click submit
+    ![](src/screenshots/newQuestion.PNG)
   - to view the leaderboard : click on *LeaderBoard* in the navbar
+    ![](src/screenshots/leaderboard.PNG)
   - you can logout by clicking *logout* in the navbar
