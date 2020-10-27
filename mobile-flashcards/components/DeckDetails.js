@@ -2,11 +2,23 @@ import React , {Component} from 'react'
 import {View , Text , TouchableOpacity, StyleSheet} from 'react-native'
 
 import {connect} from 'react-redux'
+import {deleteDeck} from '../actions'
 
 class DeckDetails extends Component {
 
   addCard = (title)=>{
     this.props.navigation.navigate('AddCard' , {deck:title})
+  }
+
+  deleteDeck = (title)=>{
+    const {dispatch , navigation} = this.props
+    dispatch(deleteDeck(title))
+    navigation.navigate('Decks')
+  }
+
+  startQuiz = (title)=>{
+    const {navigation} = this.props
+    navigation.navigate('Quiz' , {title:title})
   }
 
   render(){
@@ -21,10 +33,10 @@ class DeckDetails extends Component {
         <TouchableOpacity style={styles.button} onPress={()=> this.addCard(title)}>
           <Text style={styles.buttonText}>Add Card</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={()=>this.startQuiz(title)}>
           <Text style={styles.buttonText}>Start Quiz</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={()=> this.deleteDeck(title)}>
           <Text style={styles.buttonText}>Delete Deck</Text>
         </TouchableOpacity>
       </View>

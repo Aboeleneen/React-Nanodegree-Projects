@@ -7,6 +7,9 @@ import AddDeck from './components/AddDeck'
 import DeckDetails from './components/DeckDetails'
 import AddCard from './components/AddCard'
 import DeckList from './components/DeckList'
+import Question from './components/Question'
+import Quiz from './components/Quiz'
+import QuizResult from './components/QuizResult'
 
 import {createBottomTabNavigator  } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native';
@@ -36,6 +39,8 @@ export default function App() {
           <Stack.Screen component={Tabs} name='Home' />
           <Stack.Screen component={DeckDetails} name='Details' />
           <Stack.Screen component={AddCard} name='AddCard'/>
+          <Stack.Screen component={Quiz} name='Quiz' />
+          <Stack.Screen component={QuizResult} name='Result' />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
