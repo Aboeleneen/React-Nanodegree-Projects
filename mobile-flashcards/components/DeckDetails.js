@@ -1,5 +1,5 @@
 import React , {Component} from 'react'
-import {View , Text , TouchableOpacity, StyleSheet} from 'react-native'
+import {View , Text , TouchableOpacity, StyleSheet , Alert} from 'react-native'
 
 import {connect} from 'react-redux'
 import {deleteDeck} from '../actions'
@@ -12,8 +12,21 @@ class DeckDetails extends Component {
 
   deleteDeck = (title)=>{
     const {dispatch , navigation} = this.props
-    dispatch(deleteDeck(title))
-    navigation.navigate('Decks')
+    Alert.alert(
+      "Delete Deck",
+      `Are you sure you want to delete the deck ${title}?`,
+      [
+        { text: "Cancel" },
+        {
+          text: "OK",
+          onPress: async () => {
+            await dispatch(deleteDeck(title))
+            navigation.navigate('Home')
+          }
+        }
+      ],
+      { cancelable: true }
+    );
   }
 
   startQuiz = (title)=>{
@@ -22,6 +35,7 @@ class DeckDetails extends Component {
   }
 
   render(){
+    console.log('render' , this.props)
     const {deck} = this.props.route.params
     const deck_ = this.props.state[deck]
     const title = deck_.title

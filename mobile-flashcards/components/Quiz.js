@@ -1,7 +1,8 @@
 import React , {Component} from 'react'
-import {View , Text , TouchableOpacity} from 'react-native'
+import {View , Text , TouchableOpacity , StyleSheet } from 'react-native'
 
 import Question from './Question'
+import QuizResult from './QuizResult'
 
 import {connect} from 'react-redux'
 
@@ -35,20 +36,48 @@ class Quiz extends Component{
   }
 
   render(){
-      if(this.state.currentIndex === this.props.questions.length){
-        this.props.navigation.navigate('Result' ,
-          {result : {correctAnswers : this.state.correctAnswers , wrongAnswers:this.state.wrongAnswers }})
+      if(this.state.currentIndex == this.props.questions.length){
+        return <QuizResult result={{correctAnswers : this.state.correctAnswers , wrongAnswers:this.state.wrongAnswers }} />
       }
       const {currentIndex} = this.state
       const currentQuestion = this.props.questions[currentIndex]
-
+      console.log(this.state.currentIndex === this.props.questions.length)
       return(
         <View>
-          <Question question={currentQuestion} key={currentIndex} setCorrect={this.setCorrect} setWrong={this.setWrong} />
+          <Question question={currentQuestion} key={currentIndex} />
+          <TouchableOpacity style={styles.button} onPress={this.setWrong}>
+            <Text style={styles.buttonText}>False</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.button, {backgroundColor:'pink'}]} onPress={this.setCorrect}>
+            <Text style={styles.buttonText}>True</Text>
+          </TouchableOpacity>
         </View>
       )
   }
 }
+
+const styles = StyleSheet.create({
+  container : {
+    flex : 1 ,
+    alignItems : 'center' ,
+    justifyContent : 'space-around' ,
+    borderWidth : 1 ,
+    borderColor: 'red',
+    borderLeftWidth : 7 ,
+    minHeight : 80,
+    marginTop : 20 ,
+  } ,
+  button : {
+    padding : 5 ,
+    backgroundColor : 'red' ,
+    margin:10,
+  } ,
+  buttonText : {
+    color : 'white'
+  }
+})
+
 
 function mapStateToProps(state ,props){
   const {title} = props.route.params

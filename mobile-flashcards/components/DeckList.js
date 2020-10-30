@@ -2,10 +2,20 @@
 import {View, StyleSheet , Text} from 'react-native'
 import {connect} from 'react-redux'
 
+import {getDecksFromStorage} from '../utils/API'
+import {loadDecks} from '../actions'
+
 import Deck from './Deck'
 class DeckList extends Component{
   state = {
     decks : {}
+  }
+
+  componentDidMount(){
+    const {dispatch} = this.props
+    const decks = getDecksFromStorage()
+    if(decks !== null)
+      dispatch(loadDecks(decks))
   }
 
   render(){
@@ -40,9 +50,10 @@ const styles = StyleSheet.create({
   }
 })
 
-function mapStateToProps({decks}){
+function mapStateToProps(state){
+  console.log('Mount' , 'DeckList')
   return {
-    decks,
+    decks : state,
   }
 }
-export default connect()(DeckList)
+export default connect(mapStateToProps)(DeckList)

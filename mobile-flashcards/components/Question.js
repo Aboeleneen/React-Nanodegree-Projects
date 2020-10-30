@@ -7,9 +7,6 @@ export default class Question extends Component {
     answered : false ,
   }
 
-  componentDidMount(){
-    this.setState(()=>({answered:false}))
-  }
   handlePress = ()=>{
     this.setState(()=>({answered:true}))
   }
@@ -21,17 +18,9 @@ export default class Question extends Component {
     const {question} = this.props
     if(answered){
       return (
-        <View>
           <View style={[styles.container , {borderColor:'purple' , padding : 20}]}>
             <Text>{question.answer}</Text>
           </View>
-          <TouchableOpacity onPress={()=>this.props.setCorrect()}>
-            <Text>True</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={()=>this.props.setWrong()}>
-            <Text>False</Text>
-          </TouchableOpacity>
-        </View>
       )
     }
     return(
@@ -53,13 +42,13 @@ const styles = StyleSheet.create({
     borderWidth : 1 ,
     borderColor: 'red',
     borderLeftWidth : 7 ,
-    maxHeight : 80,
+    minHeight : 80,
     marginTop : 20 ,
   } ,
   button : {
-    alignSelf : 'flex-end' ,
     padding : 5 ,
     backgroundColor : 'red' ,
+    margin:10,
   } ,
   buttonText : {
     color : 'white'
