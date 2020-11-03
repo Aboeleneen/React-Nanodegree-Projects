@@ -1,7 +1,11 @@
 import React , {Component} from 'react'
 import {View , TextInput, TouchableOpacity ,StyleSheet , Text , Alert} from 'react-native'
+
 import {connect} from 'react-redux'
 import {addDeck} from '../actions'
+
+import {addDeckToStorage} from '../utils/API'
+
 class AddDeck extends Component{
   state = {
     title : ''
@@ -31,18 +35,21 @@ class AddDeck extends Component{
       return;
     }
 
-    // update redux
-    dispatch(addDeck({
+    const newDeck = {
       [title] : {
         title : title ,
         questions : []
       }
-    }))
+    }
+    // update redux
+    dispatch(addDeck(newDeck))
 
     // change navigation
     //navigate("Home")
     navigate('Decks')
+
     // update localStorage
+    addDeckToStorage(newDeck)
 
     this.setState(()=>({title:''}))
     console.log(decks)

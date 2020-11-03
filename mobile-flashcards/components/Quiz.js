@@ -6,6 +6,8 @@ import QuizResult from './QuizResult'
 
 import {connect} from 'react-redux'
 
+import {clearLocalNotifications , setLocalNotifications} from '../utils/helpers'
+
 class Quiz extends Component{
   state = {
     currentIndex : 0 ,
@@ -37,6 +39,8 @@ class Quiz extends Component{
 
   render(){
       if(this.state.currentIndex == this.props.questions.length){
+        clearLocalNotifications()
+        setLocalNotifications()
         return <QuizResult result={{correctAnswers : this.state.correctAnswers , wrongAnswers:this.state.wrongAnswers }} />
       }
       const {currentIndex} = this.state

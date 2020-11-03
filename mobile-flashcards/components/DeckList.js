@@ -1,4 +1,4 @@
-  import React , {Component} from 'react'
+import React , {Component} from 'react'
 import {View, StyleSheet , Text} from 'react-native'
 import {connect} from 'react-redux'
 
@@ -11,9 +11,9 @@ class DeckList extends Component{
     decks : {}
   }
 
-  componentDidMount(){
+  async componentDidMount(){
     const {dispatch} = this.props
-    const decks = getDecksFromStorage()
+    const decks = await getDecksFromStorage()
     if(decks !== null)
       dispatch(loadDecks(decks))
   }
@@ -22,8 +22,6 @@ class DeckList extends Component{
     const {navigation}  = this.props
     const {decks}= this.props
 
-    //this.setState(()=>({decks:this.props.decks}))
-    console.log("done")
     if(!decks) return (
       <View style={styles.container}>
         <Text>there is no decks </Text>

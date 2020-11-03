@@ -5,7 +5,6 @@ const storage_key = 'mobile-flashcard-app'
 
 export const getDecksFromStorage = async ()=>{
   let decks = await AsyncStorage.getItem(storage_key)
-  console.log('storage' , decks)
   return JSON.parse(decks)
 }
 

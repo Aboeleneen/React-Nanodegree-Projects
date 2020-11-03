@@ -3,6 +3,8 @@ import {View , TextInput, TouchableOpacity ,StyleSheet , Text} from 'react-nativ
 import {connect} from 'react-redux'
 import {addCard} from '../actions'
 
+import {addCardToDeck} from '../utils/API'
+
 class AddCard extends Component{
   state = {
     question:'' ,
@@ -14,8 +16,8 @@ class AddCard extends Component{
     const {deck} = this.props.route.params
     const {question , answer} = this.state
     this.props.dispatch(addCard(deck , {question, answer}))
-
-    this.props.navigation.navigate('Details' , {deckId:this.props.route.params.deckId})
+    addCardToDeck(deck , {question , answer ,})
+    this.props.navigation.navigate('Details' , {deckId:deck.deckId})
   }
 
   handleChange = (key , value)=>{

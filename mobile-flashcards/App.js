@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React , {Component} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import Deck from './components/Deck'
@@ -19,6 +19,8 @@ import {createStore} from 'redux'
 import {Provider} from 'react-redux'
 import reducers from './reducers'
 
+import {setLocalNotifications} from './utils/helpers'
+
 const store = createStore(reducers)
 
 const Tab =createBottomTabNavigator()
@@ -31,20 +33,25 @@ function Tabs({navigation}){
     </Tab.Navigator>
   )
 }
-export default function App() {
-  return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen component={Tabs} name='Home' />
-          <Stack.Screen component={DeckDetails} name='Details' />
-          <Stack.Screen component={AddCard} name='AddCard'/>
-          <Stack.Screen component={Quiz} name='Quiz' />
-          <Stack.Screen component={QuizResult} name='Result' />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </Provider>
-  );
+export default class App extends Component{
+  async componentDidMount(){
+    await setLocalNotifications()
+  }
+  render(){
+    return (
+      <Provider store={store}>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen component={Tabs} name='Home' />
+            <Stack.Screen component={DeckDetails} name='Details' />
+            <Stack.Screen component={AddCard} name='AddCard'/>
+            <Stack.Screen component={Quiz} name='Quiz' />
+            <Stack.Screen component={QuizResult} name='Result' />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </Provider>
+    )
+  }
 }
 
 const styles = StyleSheet.create({

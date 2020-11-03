@@ -4,6 +4,8 @@ import {View , Text , TouchableOpacity, StyleSheet , Alert} from 'react-native'
 import {connect} from 'react-redux'
 import {deleteDeck} from '../actions'
 
+import {removeDeckFromStorage} from '../utils/API'
+
 class DeckDetails extends Component {
 
   addCard = (title)=>{
@@ -27,6 +29,7 @@ class DeckDetails extends Component {
       ],
       { cancelable: true }
     );
+    removeDeckFromStorage(title)
   }
 
   startQuiz = (title)=>{
