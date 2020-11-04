@@ -48,7 +48,7 @@ export const setLocalNotifications = async ()=>{
                             body: "👋 Don't forget solve a quiz today!",
                           },
                           trigger: {
-                          type: 'daily',
+                            type: 'daily',
                             hour: 15,
                             minute: 42,
                     },  }
