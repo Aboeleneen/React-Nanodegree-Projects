@@ -37,11 +37,33 @@ class Quiz extends Component{
     this.getNext()
   }
 
+  startOver = ()=>{
+    this.setState(()=>({
+      currentIndex : 0 ,
+      correctAnswers : 0 ,
+      wrongAnswers : 0 ,
+    }))
+  }
+
+  backToDeck = ()=>{
+    this.props.navigation.navigate('Details' , {deck:this.props.title})
+  }
+
   render(){
       if(this.state.currentIndex == this.props.questions.length){
         clearLocalNotifications()
         setLocalNotifications()
-        return <QuizResult result={{correctAnswers : this.state.correctAnswers , wrongAnswers:this.state.wrongAnswers }} />
+        return (
+          <View>
+            <QuizResult result={{correctAnswers : this.state.correctAnswers , wrongAnswers:this.state.wrongAnswers }} />
+            <TouchableOpacity style={styles.button} onPress={this.startOver}>
+              <Text style={styles.buttonText}>Restart Quiz</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={this.backToDeck}>
+              <Text style={styles.buttonText}>Back To Deck</Text>
+            </TouchableOpacity>
+          </View>
+        )
       }
       const {currentIndex} = this.state
       const currentQuestion = this.props.questions[currentIndex]
@@ -50,11 +72,11 @@ class Quiz extends Component{
         <View>
           <Question question={currentQuestion} key={currentIndex} />
           <TouchableOpacity style={styles.button} onPress={this.setWrong}>
-            <Text style={styles.buttonText}>False</Text>
+            <Text style={styles.buttonText}>Wrong</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={[styles.button, {backgroundColor:'pink'}]} onPress={this.setCorrect}>
-            <Text style={styles.buttonText}>True</Text>
+          <TouchableOpacity style={[styles.button, {backgroundColor:'green'}]} onPress={this.setCorrect}>
+            <Text style={styles.buttonText}>Correct</Text>
           </TouchableOpacity>
         </View>
       )
@@ -87,7 +109,8 @@ function mapStateToProps(state ,props){
   const {title} = props.route.params
 
   return{
-    questions : state[title].questions
+    questions : state[title].questions ,
+    title : title
   }
 }
 

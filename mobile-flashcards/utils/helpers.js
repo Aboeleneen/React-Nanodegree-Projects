@@ -48,9 +48,7 @@ export const setLocalNotifications = async ()=>{
                             body: "👋 Don't forget solve a quiz today!",
                           },
                           trigger: {
-                          type: 'daily',
-                            hour: 15,
-                            minute: 42,
+                            hour: tommorow.getHours(), minute: tommorow.getMinutes(), repeats: true 
                     },  }
                 )
                 console.log("Notifications" , tommorow)

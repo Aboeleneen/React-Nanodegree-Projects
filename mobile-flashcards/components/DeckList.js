@@ -1,5 +1,5 @@
 import React , {Component} from 'react'
-import {View, StyleSheet , Text} from 'react-native'
+import {View, StyleSheet , Text , ScrollView} from 'react-native'
 import {connect} from 'react-redux'
 
 import {getDecksFromStorage} from '../utils/API'
@@ -28,11 +28,15 @@ class DeckList extends Component{
       </View>
     )
     return(
-      <View style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        showsVerticalScrollIndicator ={false}
+        showsHorizontalScrollIndicator={false}
+      >
         {Object.keys(decks).map((key)=>(
           <Deck deck={decks[key]} key={key} navigation={navigation}/>
         ))}
-      </View>
+      </ScrollView>
     )
   }
 }
@@ -40,8 +44,6 @@ class DeckList extends Component{
 const styles = StyleSheet.create({
   container :{
     flex : 1 ,
-    alignItems : 'stretch' ,
-    justifyContent : 'flex-start',
     marginLeft : 20 ,
     marginRight : 20 ,
     marginTop : 10 ,
