@@ -12,7 +12,7 @@ class DeckDetails extends Component {
     this.props.navigation.navigate('AddCard' , {deck:title})
   }
 
-  deleteDeck = (title)=>{
+  /*deleteDeck = (title)=>{
     const {dispatch , navigation} = this.props
     Alert.alert(
       "Delete Deck",
@@ -30,7 +30,7 @@ class DeckDetails extends Component {
       { cancelable: true }
     );
     removeDeckFromStorage(title)
-  }
+  }*/
 
   startQuiz = (title)=>{
     const {navigation} = this.props
@@ -46,16 +46,16 @@ class DeckDetails extends Component {
     return(
       <View style={styles.container}>
         <Text>{title}</Text>
-        <Text>{questions}</Text>
+        <Text>{questions} cards</Text>
         <TouchableOpacity style={styles.button} onPress={()=> this.addCard(title)}>
           <Text style={styles.buttonText}>Add Card</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={()=>this.startQuiz(title)}>
-          <Text style={styles.buttonText}>Start Quiz</Text>
+          <Text style={styles.buttonText}>Starts Quiz</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={()=> this.deleteDeck(title)}>
+        {/*<TouchableOpacity style={styles.button} onPress={()=> this.deleteDeck(title)}>
           <Text style={styles.buttonText}>Delete Deck</Text>
-        </TouchableOpacity>
+        </TouchableOpacity>*/}
       </View>
     )
   }

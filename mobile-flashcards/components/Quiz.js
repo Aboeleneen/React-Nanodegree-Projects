@@ -78,6 +78,8 @@ class Quiz extends Component{
           <TouchableOpacity style={[styles.button, {backgroundColor:'green'}]} onPress={this.setCorrect}>
             <Text style={styles.buttonText}>Correct</Text>
           </TouchableOpacity>
+
+          <Text>{currentIndex+1} / {this.props.questions.length}</Text>
         </View>
       )
   }

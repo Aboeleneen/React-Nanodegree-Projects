@@ -46,7 +46,7 @@ class AddDeck extends Component{
 
     // change navigation
     //navigate("Home")
-    navigate('Decks')
+    navigate('Details' , {deck:title})
 
     // update localStorage
     addDeckToStorage(newDeck)

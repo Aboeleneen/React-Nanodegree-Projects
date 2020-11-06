@@ -7,8 +7,8 @@ export default class Question extends Component {
     answered : false ,
   }
 
-  handlePress = ()=>{
-    this.setState(()=>({answered:true}))
+  handlePress = (current)=>{
+    this.setState(()=>({answered:current}))
   }
 
 
@@ -18,15 +18,18 @@ export default class Question extends Component {
     const {question} = this.props
     if(answered){
       return (
-          <View style={[styles.container , {borderColor:'purple' , padding : 20}]}>
+          <View style={[styles.container , {borderColor:'purple'}]}>
             <Text>{question.answer}</Text>
+            <TouchableOpacity style={styles.button,{backgroundColor:'purple' , padding:8}} onPress={()=>this.handlePress(false)}>
+              <Text style={styles.buttonText}>View Question</Text>
+            </TouchableOpacity>
           </View>
       )
     }
     return(
       <View style={styles.container}>
         <Text>{question.question}</Text>
-        <TouchableOpacity style={styles.button} onPress={()=>this.handlePress()}>
+        <TouchableOpacity style={styles.button} onPress={()=>this.handlePress(true)}>
           <Text style={styles.buttonText}>View Answer</Text>
         </TouchableOpacity>
       </View>

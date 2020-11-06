@@ -46,7 +46,7 @@ class DeckDetails extends Component {
     return(
       <View style={styles.container}>
         <Text>{title}</Text>
-        <Text>{questions}</Text>
+        <Text>{questions} cards</Text>
         <TouchableOpacity style={styles.button} onPress={()=> this.addCard(title)}>
           <Text style={styles.buttonText}>Add Card</Text>
         </TouchableOpacity>

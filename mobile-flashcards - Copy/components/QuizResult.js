@@ -7,8 +7,7 @@ export default class QuizResult extends Component{
     return(
       <View>
         <Text> Your Score </Text>
-        <Text>True : {correctAnswers}</Text>
-        <Text>False : {wrongAnswers}</Text>
+        <Text>correctAnswers : {correctAnswers}</Text>
       </View>
     )
   }
