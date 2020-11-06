@@ -22,6 +22,9 @@ yarn web
 
 Your default browser will open with the Metro Bundler running
 
+## Testing :
+ Testing on android device 
+
 
 
   
