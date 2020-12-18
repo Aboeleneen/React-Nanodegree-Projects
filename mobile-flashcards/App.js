@@ -1,6 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React , {Component} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import * as Font from 'expo-font';
+import { AppLoading } from 'expo';
 
 import Deck from './components/Deck'
 import AddDeck from './components/AddDeck'
@@ -13,7 +15,9 @@ import QuizResult from './components/QuizResult'
 
 import {createBottomTabNavigator  } from '@react-navigation/bottom-tabs'
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator , HeaderBackButton  } from '@react-navigation/stack';
+
+import { AntDesign , Ionicons } from '@expo/vector-icons';
 
 import {createStore} from 'redux'
 import {Provider} from 'react-redux'
@@ -25,24 +29,70 @@ const store = createStore(reducers)
 
 const Tab =createBottomTabNavigator()
 const Stack= createStackNavigator()
+
 function Tabs({navigation}){
   return(
-    <Tab.Navigator>
-      <Tab.Screen name='Decks' children={()=><DeckList navigation={navigation} decks={store.getState()}/>}/>
-      <Tab.Screen name='add Deck' children={()=><AddDeck navigation={navigation} />}/>
+    <Tab.Navigator
+      tabBarOptions={{
+        activeTintColor: '#e91e63',
+      }}
+    >
+      <Tab.Screen
+        name='Decks'
+        children={()=><DeckList navigation={navigation}/>}
+        options={{
+          tabBarLabel:'Decks' ,
+          tabBarIcons:({color,size})=>(
+            <AntDesign name="creditcard" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name='add Deck'
+        children={()=><AddDeck navigation={navigation} />}
+        options={{
+          tabBarLabel: 'Add Deck' ,
+          tabBarIcons:({color,size})=>(
+            <Ionicons name="ios-add-circle-outline" size={size} color={color} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   )
 }
 export default class App extends Component{
+  state = {
+    isReady:false,
+  }
   async componentDidMount(){
-    await setLocalNotifications()
+    //await setLocalNotifications()
+    await Font.loadAsync({
+      Roboto: require('native-base/Fonts/Roboto.ttf'),
+      Roboto_medium: require('native-base/Fonts/Roboto_medium.ttf'),
+      ...Ionicons.font,
+    });
+    this.setState({ isReady: true });
   }
   render(){
+    if (!this.state.isReady) {
+     return <AppLoading />;
+   }
+
     return (
       <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator>
-            <Stack.Screen component={Tabs} name='Home' />
+            <Stack.Screen
+              component={Tabs}
+              name='Keep Working'
+              options= {{
+                headerTitleAlign:'center' ,
+                headerStyle:{
+                  backgroundColor:'#e91e63'
+                },
+                headerTintColor:'white'
+              }}
+            />
             <Stack.Screen component={DeckDetails} name='Details' />
             <Stack.Screen component={AddCard} name='AddCard'/>
             <Stack.Screen component={Quiz} name='Quiz' />
